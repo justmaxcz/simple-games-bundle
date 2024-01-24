@@ -1,0 +1,64 @@
+#!/bin/bash
+
+echo "simple mouse hunt"
+echo "-------------------"
+
+# Print a message
+echo "Press enter to continue"
+
+# Wait for the user to press enter
+read
+
+# Do something else
+echo "Continuing the script"
+
+
+# Define the track length
+track_length=200
+
+# Define the starting positions of the cat and mouse
+cat_pos=0
+mouse_pos=$(($track_length - 2))
+
+# Define the characters for the cat and mouse
+cat_char="C"
+mouse_char="M"
+
+# Define the dice roll function
+function roll_dice {
+  echo $((1 + RANDOM % 6))
+}
+
+# Define the main game loop
+while true; do
+  # Clear the screen
+  clear
+
+  # Print the track
+  printf "%${track_length}s\n" "Track"
+  printf "%${track_length}s\n" "|"
+
+  # Print the cat and mouse
+  printf "%${cat_pos}s" "$cat_char"
+  printf "%$(($mouse_pos - $cat_pos - 1))s" "$mouse_char"
+  printf "%$(($track_length - $mouse_pos))s\n" "|"
+
+  # Check if the cat has caught the mouse
+  if [ $cat_pos -ge $mouse_pos ]; then
+    echo "The cat caught the mouse!"
+    break
+  fi
+
+  # Wait for input from the user
+  read -n 1 -s -r -p "Press any key to roll the dice..."
+
+  # Roll the dice
+  roll=$(roll_dice)
+
+  # Update the cat's position
+  cat_pos=$(($cat_pos + $roll))
+
+  # Update the mouse's position
+  mouse_pos=$(($mouse_pos - $roll))
+
+done

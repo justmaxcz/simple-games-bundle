@@ -1,0 +1,100 @@
+#!/bin/bash
+
+echo "simple race"
+echo "-------------------"
+
+# Print a message
+echo "Press enter to continue"
+
+# Wait for the user to press enter
+read
+
+# Do something else
+echo "Continuing the script"
+
+
+
+# Define the track length
+track_length=200
+
+# Define the starting positions of the players
+player1_pos=0
+player2_pos=0
+
+# Define the characters for the players
+player1_char="C"
+player2_char="Z"
+player3_char="E"
+
+# Define the dice roll function
+function roll_dice {
+  echo $((1 + RANDOM % 6))
+}
+
+# Define the main game loop
+while true; do
+  # Clear the screen
+  clear
+
+  # Print the track
+  printf "%${track_length}s\n" "Track"
+  printf "%${track_length}s\n" "|"
+
+  # Print the players
+  printf "%${player1_pos}s" "$player1_char"
+  printf "%$(($track_length - $player1_pos - 1))s\n" "|"
+
+  printf "%${player2_pos}s" "$player2_char"
+  printf "%$(($track_length - $player2_pos - 1))s\n" "|"
+
+
+  printf "%${player3_pos}s" "$player3_char"
+  printf "%$(($track_length - $player3_pos - 1))s\n" "|"
+
+
+  # Check if player 1 has won
+  if [ $player1_pos -ge $(($track_length - 1)) ]; then
+    echo "Player 1 wins!"
+    break
+  fi
+
+  # Check if player 2 has won
+  if [ $player2_pos -ge $(($track_length - 1)) ]; then
+    echo "Player 2 wins!"
+    break
+  fi
+
+# Check if player 3 has won
+  if [ $player3_pos -ge $(($track_length - 1)) ]; then
+    echo "Player 3 wins!"
+    break
+  fi
+
+  # Wait for input from player 1
+  read -n 1 -s -r -p "Player 1, press any key to roll the dice..."
+
+  # Roll the dice for player 1
+  player1_roll=$(roll_dice)
+
+  # Update player 1's position
+  player1_pos=$(($player1_pos + $player1_roll))
+
+  # Wait for input from player 2
+  read -n 1 -s -r -p "Player 2, press any key to roll the dice..."
+
+  # Roll the dice for player 2
+  player2_roll=$(roll_dice)
+
+  # Update player 2's position
+  player2_pos=$(($player2_pos + $player2_roll))
+
+ # Wait for input from player 2
+  read -n 1 -s -r -p "Player 3, press any key to roll the dice..."
+
+  # Roll the dice for player 2
+  player3_roll=$(roll_dice)
+
+  # Update player 2's position
+  player3_pos=$(($player2_pos + $player2_roll))
+done
+
