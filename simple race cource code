@@ -1,7 +1,8 @@
 #!/bin/bash
 
 echo "simple race"
-echo "-------------------"
+echo "made by stuff by max" 
+echo "======================
 
 # Print a message
 echo "Press enter to continue"
