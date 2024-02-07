@@ -1,7 +1,8 @@
 #!/bin/bash
 
 echo "simple mouse hunt"
-echo "-------------------"
+echo "made by stuffbymax"
+echo "===================" 
 
 # Print a message
 echo "Press enter to continue"
